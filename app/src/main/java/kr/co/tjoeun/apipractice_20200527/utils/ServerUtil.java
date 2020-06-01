@@ -3,6 +3,8 @@ package kr.co.tjoeun.apipractice_20200527.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -249,8 +251,8 @@ public class ServerUtil {
 //        요청할때 파라미터를 주소에 모두 적어줘야한다.
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL+"/main_info").newBuilder();
-        urlBuilder.addEncodedQueryParameter("device_token", "임시 기기값");
-        urlBuilder.addEncodedQueryParameter("os", "etc");
+        urlBuilder.addEncodedQueryParameter("device_token", FirebaseInstanceId.getInstance().getToken());
+        urlBuilder.addEncodedQueryParameter("os", "Android");
 
         String completeUrl = urlBuilder.build().toString();
         Log.d("완성된URL", completeUrl);

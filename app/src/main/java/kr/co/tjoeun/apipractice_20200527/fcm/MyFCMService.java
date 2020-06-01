@@ -12,7 +12,7 @@ public class MyFCMService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
-        Log.d("디바이스토큰", s);
+        Log.d("디바이스토큰 새로발급", s);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
 
                 try {
-                    Log.d("디바이스토큰", FirebaseInstanceId.getInstance().getToken());
+                    Log.d("저장된 디바이스토큰", FirebaseInstanceId.getInstance().getToken());
                 }
                 catch (Exception e) {
                     e.printStackTrace();
