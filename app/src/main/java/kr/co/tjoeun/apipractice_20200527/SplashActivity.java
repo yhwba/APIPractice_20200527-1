@@ -5,6 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import kr.co.tjoeun.apipractice_20200527.utils.ContextUtil;
 
@@ -34,6 +39,14 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                try {
+                    Log.d("디바이스토큰", FirebaseInstanceId.getInstance().getToken());
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 if (!ContextUtil.getLoginUserToken(mContext).equals("") && ContextUtil.isAutoLogin(mContext)) {
 
                     Intent myIntent = new Intent(mContext, MainActivity.class);
