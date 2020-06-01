@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 public class TopicReply {
 
@@ -35,8 +36,20 @@ public class TopicReply {
             String createdAtStr = jsonObject.getString("created_at");
 
 //            만들어져있는 createdAt 캘린더에 => 년/월/일/시 등 데이터 세팅. => setTime
+//            내 핸드폰의 시간과 Vs. UTC 시간의 격차가 얼마인지 구해서 더해줘야함.
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             tr.createdAt.setTime(sdf.parse(createdAtStr));
+
+//            시차 : 9시간 => 작성시간+9
+//            시차 구하는 방법 검색. => Timezone
+
+            TimeZone myPhoneTimeZone = tr.createdAt.getTimeZone();
+//            해당 TimeZone의 실제 시차 값.
+            int gmtOffset = myPhoneTimeZone.getRawOffset();
+
+//            현재 구해낸 시간에 더해준다.
+            tr.createdAt.add(Calendar.HOUR_OF_DAY, gmtOffset);
 
 
         } catch (JSONException e) {
