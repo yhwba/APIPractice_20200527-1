@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -54,6 +56,31 @@ public class UserListActivity extends BaseActivity {
             @Override
             public void onResponse(JSONObject json) {
                 Log.d("사용자목록확인", json.toString());
+
+                try {
+                    int code = json.getInt("code");
+
+                    if (code == 200) {
+                        JSONObject data = json.getJSONObject("data");
+                        JSONArray usersJsonArray = data.getJSONArray("users");
+
+                        for (int i=0 ; i < usersJsonArray.length() ; i++) {
+                            JSONObject userJsonObj = usersJsonArray.getJSONObject(i);
+                            User user = User.getUserFromJson(userJsonObj);
+                            users.add(user);
+                        }
+
+//                      notifyDataset 필요하다
+
+
+
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
