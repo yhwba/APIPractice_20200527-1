@@ -94,4 +94,37 @@ public class TopicReply {
     public Calendar getCreatedAt() {
         return createdAt;
     }
+
+//    현재 시간 대비 작성시간이 얼마나 오래되었나를 체크해서, 다른 양식으로 출력
+
+    public String getFormattedTimeAgo() {
+//        1. 작성한 시간(!)으로부터 현재시간(!)이 얼마나 흘렀나? => 그 둘의 차이
+
+        long writeTime = this.createdAt.getTimeInMillis(); // 작성 시간
+        long now = System.currentTimeMillis(); // 현재 시간을 long으로 바로 리턴.
+
+        long diff = now - writeTime;
+
+        if (diff < 1 * 60 * 1000) {
+            return "방금 전";
+        }
+        else if (diff < 1 * 60 * 60 * 1000) {
+
+            long minute = diff / 1000 / 60;
+            return String.format("%d분 전", minute);
+        }
+        else if (diff < 1 * 24 * 60 * 60 * 1000) {
+            long hour = diff / 1000 / 60 / 60;
+            return String.format("%d시간 전", hour);
+        }
+        else {
+//            하루가 넘어가면 그 날짜만 출력. 2020년 5월 5일
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 M월 d일");
+            return sdf.format(this.createdAt.getTime());
+        }
+
+
+    }
+
+
 }
