@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import kr.co.tjoeun.apipractice_20200527.R;
@@ -42,6 +43,7 @@ public class TopicReplyAdapter extends ArrayAdapter<TopicReply> {
         TextView contentTxt = row.findViewById(R.id.contentTxt);
         TextView writerNickNameTxt = row.findViewById(R.id.writerNickNameTxt);
         TextView sideTxt = row.findViewById(R.id.sideTxt);
+        TextView createdAtTxt = row.findViewById(R.id.createdAtTxt);
 
         TopicReply data = mList.get(position);
 
@@ -60,7 +62,12 @@ public class TopicReplyAdapter extends ArrayAdapter<TopicReply> {
         }
 
 //        언제 댓글을 남겼는지 표시.
-//        댓글 남긴 시간 파싱
+//        댓글 남긴 시간 파싱 => M월 d일 H시 m분
+
+        SimpleDateFormat sdf = new SimpleDateFormat("M월 d일 a h시 m분");
+        createdAtTxt.setText(sdf.format(data.getCreatedAt().getTime()));
+
+//        data.getcre
 
         return row;
     }
