@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.tjoeun.apipractice_20200527.adapters.UserAdapter;
 import kr.co.tjoeun.apipractice_20200527.databinding.ActivityUserListBinding;
 import kr.co.tjoeun.apipractice_20200527.datas.User;
 import kr.co.tjoeun.apipractice_20200527.utils.ServerUtil;
@@ -25,6 +26,7 @@ public class UserListActivity extends BaseActivity {
     ActivityUserListBinding binding;
 
     List<User> users = new ArrayList<>();
+    UserAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class UserListActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        mAdapter = new UserAdapter(mContext, R.layout.user_list_item, users);
+        binding.userListView.setAdapter(mAdapter);
 
     }
 
@@ -72,6 +77,7 @@ public class UserListActivity extends BaseActivity {
 
 //                      notifyDataset 필요하다
 
+                        mAdapter.notifyDataSetChanged();
 
 
                     }
