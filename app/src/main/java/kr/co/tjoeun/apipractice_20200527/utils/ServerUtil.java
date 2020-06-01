@@ -192,6 +192,55 @@ public class ServerUtil {
 
     }
 
+
+    public static void getRequestUserList(Context context, final JsonResponseHandler handler) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "/user").newBuilder();
+//        urlBuilder.addEncodedQueryParameter("type", checkType);
+//        urlBuilder.addEncodedQueryParameter("value", input);
+
+        String completeUrl = urlBuilder.build().toString();
+        Log.d("완성된URL", completeUrl);
+
+
+        Request request = new Request.Builder()
+                .url(completeUrl)
+                .header("X-Http-Token", ContextUtil.getLoginUserToken(context))
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String body = response.body().string();
+
+                try {
+                    JSONObject json = new JSONObject(body);
+
+                    if (handler != null) {
+                        handler.onResponse(json);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Log.d("body", body);
+
+            }
+        });
+
+
+    }
+
     public static void getRequestMainInfo(Context context, final JsonResponseHandler handler) {
 
         OkHttpClient client = new OkHttpClient();
